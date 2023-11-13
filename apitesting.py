@@ -3,7 +3,7 @@ import ip2locationio
 import config
 
 
-class IP2:
+class IP2WHOIS:
     def __init__(self):
         # Configures IP2WHOIS API key
         self.config = configuration = ip2locationio.Configuration(
@@ -41,7 +41,7 @@ class WHOISJSON:
 
 def main():
     domain = str(input("Domain to lookup: "))
-    # ip2whois = IP2()
+    # ip2whois = IP2WHOIS()
     # print(ip2whois.lookup(domain))
     whoisjson = WHOISJSON()
     print(whoisjson.whois(domain))
