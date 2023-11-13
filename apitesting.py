@@ -1,21 +1,19 @@
 import requests
-import ip2whois
-
-
-WHOISJSON = "a44628d14be119fdd207fc8fdd6e417effe265577594bdda7ba58bb5fa6e5386"
-WHOISJSONBASEURL = "https://whoisjson.com/api/v1"
-DOMAIN = "charlesadapon.com"
+import ip2locationio
+import config
 
 
 class IP2:
     def __init__(self):
         # Configures IP2WHOIS API key
-        IP2WHOIS = "96042FD29611374AF4B811F0C4D5CB1E"
-        self.ip2whois_init = ip2whois.Api(IP2WHOIS)
+        self.config = configuration = ip2locationio.Configuration(
+            config.ip2locationiotoken
+        )
+        self.domainwhois = ip2locationio.DomainWHOIS(configuration)
 
     def lookup(self, domain):
         # Lookup domain information
-        results = self.ip2whois_init.lookup(domain)
+        results = self.domainwhois.lookup(domain)
         return results
 
     def extension(self, domain):
@@ -27,19 +25,26 @@ class IP2:
 class WHOISJSON:
     def __init__(self):
         # Configures IP2WHOIS API key
-        IP2WHOISKEY = "96042FD29611374AF4B811F0C4D5CB1E"
-        self.ip2whois_init = ip2whois.Api(WHOISJSON)
+        self.baseurl = "https://whoisjson.com/api/v1"
+        self.token = config.whoisjsontoken
 
-    def lookup(self, domain):
+    def whois(self, domain):
         # Lookup domain information
-        results = self.ip2whois_init.lookup(domain)
-        return results
+        params = {"domain": domain}
+        response = requests.get(
+            self.baseurl + "/whois",
+            headers={"Authorization": self.token},
+            params=params,
+        )
+        return response.json()
 
 
 def main():
     domain = str(input("Domain to lookup: "))
-    ip2whois = IP2()
-    print(ip2whois.lookup(domain))
+    # ip2whois = IP2()
+    # print(ip2whois.lookup(domain))
+    whoisjson = WHOISJSON()
+    print(whoisjson.whois(domain))
 
 
 if __name__ == "__main__":
