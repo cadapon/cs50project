@@ -1,0 +1,11 @@
+Business Requirements
+1. Gives user status of any given domain
+2. Offers price estimate for an available domain
+3. Send email notifications
+
+Features
+1. User can provide csv file for multiple entries
+2. User can input domain name(s)
+3. 
+
+Logic Flow

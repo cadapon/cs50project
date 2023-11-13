@@ -2,16 +2,16 @@ import requests
 import ip2whois
 
 
-WHOISJSONKEY = "a44628d14be119fdd207fc8fdd6e417effe265577594bdda7ba58bb5fa6e5386"
+WHOISJSON = "a44628d14be119fdd207fc8fdd6e417effe265577594bdda7ba58bb5fa6e5386"
 WHOISJSONBASEURL = "https://whoisjson.com/api/v1"
 DOMAIN = "charlesadapon.com"
 
 
-class IP2WHOIS:
+class IP2:
     def __init__(self):
         # Configures IP2WHOIS API key
-        IP2WHOISKEY = "96042FD29611374AF4B811F0C4D5CB1E"
-        self.ip2whois_init = ip2whois.Api(IP2WHOISKEY)
+        IP2WHOIS = "96042FD29611374AF4B811F0C4D5CB1E"
+        self.ip2whois_init = ip2whois.Api(IP2WHOIS)
 
     def lookup(self, domain):
         # Lookup domain information
@@ -28,7 +28,7 @@ class WHOISJSON:
     def __init__(self):
         # Configures IP2WHOIS API key
         IP2WHOISKEY = "96042FD29611374AF4B811F0C4D5CB1E"
-        self.ip2whois_init = ip2whois.Api(IP2WHOISKEY)
+        self.ip2whois_init = ip2whois.Api(WHOISJSON)
 
     def lookup(self, domain):
         # Lookup domain information
@@ -37,8 +37,8 @@ class WHOISJSON:
 
 
 def main():
-    domain = input("Domain to lookup: ")
-    ip2whois = IP2WHOIS()
+    domain = str(input("Domain to lookup: "))
+    ip2whois = IP2()
     print(ip2whois.lookup(domain))
 
 
