@@ -10,7 +10,7 @@ Features
 
 Logic Flow
 1. Receive input(s) from user
-2. Validate input(s) by checking is domain name is [A-Z,a-z,0-9,]
+2. Validate input(s) by checking is domain name is [A-Z,a-z,0-9,_]
 3. Make API call
 4. Check response.status and response.registered
 5. If response.registered is True, return response.name,.contacts
