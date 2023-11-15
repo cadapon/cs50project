@@ -9,3 +9,6 @@ Features
 3. 
 
 Logic Flow
+1. Check if domain name is valid
+2. Call API and pass in domain name
+3. if response.staus is None or 

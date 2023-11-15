@@ -2,7 +2,7 @@ import ip2locationio
 import config
 
 
-class IP2WHOIS:
+class IP2WhoIs:
     def __init__(self):
         # Configures IP2WHOIS API key
         self.config = configuration = ip2locationio.Configuration(

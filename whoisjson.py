@@ -2,9 +2,9 @@ import requests
 import config
 
 
-class WHOISJSON:
+class WhoIsJSON:
     def __init__(self):
-        # Configures IP2WHOIS API key
+        # Configures API key
         self.baseurl = "https://whoisjson.com/api/v1"
         self.token = config.whoisjsontoken
 
@@ -16,12 +16,17 @@ class WHOISJSON:
             headers={"Authorization": self.token},
             params=params,
         )
-        return response.json()
+        jsonResponse = response.json()
+        return jsonResponse
+        # if jsonResponse["registered"]:
+        #     return f"Sorry, {domain} is already registered!"
+        # else:
+        #     return f"{domain} is available for registration!"
 
 
 def testapi():
-    whoisjson = WHOISJSON()
-    whoisjson.whois("example.com")
+    whoisjson = WhoIsJSON()
+    print(whoisjson.whois("charlesadapon.org"))
 
 
 if __name__ == "__main__":
