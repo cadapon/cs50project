@@ -10,15 +10,12 @@ def get_input():
 
 def validate_domain(domains):
     # Taken from https://www.geeksforgeeks.org/how-to-validate-a-domain-name-using-regular-expression/
-    # Regex to check valid
-    # domain name.
+    # Regex to check valid domain name.
     regex = "^((?!-)[A-Za-z0-9-]" + "{1,63}(?<!-)\\.)" + "+[A-Za-z]{2,6}"
     # Compile the ReGex
     p = re.compile(regex)
-    # print(domains)
     domain_list = []
     for domain in domains:
-        # print(domain)
         # If the string is empty
         # return false
         if domain == None:
@@ -38,10 +35,6 @@ def validate_domain(domains):
 def domain_lookup(domains):
     # Makes API call to WHOISJSON
     lookup = whoisjson.WhoIsJSON()
-    # for domain in domains:
-    # print(domain)
-    # response = lookup.whois(domain.strip())
-    # print(parse_lookup(response))
     try:
         for domain in domains:
             response = lookup.whois(domain.strip())
@@ -64,7 +57,6 @@ def parse_lookup(response):
 
 def main():
     answer = get_input()
-
     domains = validate_domain(answer)
     domain_lookup(domains)
 
