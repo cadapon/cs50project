@@ -1,5 +1,16 @@
 import whoisjson
 import re
+import argparse
+
+
+def start_parse():
+    parser = argparse.ArgumentParser(
+        description="Check if domain is available for purchase"
+    )
+    parser.add_argument(
+        "-f", "--file", type=str, required=False, help="Path to csv file"
+    )
+    args = parser.parse_args()
 
 
 def get_input():
@@ -56,6 +67,7 @@ def parse_lookup(response):
 
 
 def main():
+    start_parse()
     answer = get_input()
     domains = validate_domain(answer)
     domain_lookup(domains)
