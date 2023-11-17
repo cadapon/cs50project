@@ -18,10 +18,6 @@ class WhoIsJSON:
         )
         jsonResponse = response.json()
         return jsonResponse
-        # if jsonResponse["registered"]:
-        #     return f"Sorry, {domain} is already registered!"
-        # else:
-        #     return f"{domain} is available for registration!"
 
 
 def testapi():
