@@ -40,33 +40,26 @@ def validate_domain(domains):
             domain_list.append(domain)
         else:
             print(
-                "Not a valid domain. The spaces and the following characters are not allowed: .! @ # $ % ^ & * ( ) ; : , ? / \ = + < >"
+                "Not a valid domain. The spaces and the following characters are not allowed: .! @ # $ % ^ & * ( ) ; : , ? / '\ ' = + < >"
             )
-            pass
+            sys.exit(1)
     return domain_list
 
 
 def domain_lookup(domains):
     # Makes API call to WHOISJSON
     lookup = whoisjson.WhoIsJSON()
-    try:
-        for domain in domains:
-            response = lookup.whois(domain.strip())
-            print(parse_lookup(response))
-
-    except:
-        print("Error attempting to make API call!")
-
-
-def parse_lookup(response):
-    # Return if domain is available for registration
-    if response["registered"]:
-        return f"Sorry, {response['name']} is already registered!"
-    if response["registered"] == False:
-        return f"{response['name']} is available for registration!"
-    else:
-        # If API cannot lookup domain, return status message
-        return response
+    for domain in domains:
+        response = lookup.whois(domain.strip())
+        # Return domain registration status
+        try:
+            if response["registered"]:
+                return f"Sorry, {response['name']} is already registered!"
+            if response["registered"] == False:
+                return f"{response['name']} is available for registration!"
+        except KeyError:
+            # If API cannot lookup domain, return status message
+            return response
 
 
 def read_csv(file):
@@ -74,17 +67,18 @@ def read_csv(file):
         csvFile = csv.reader(f)
         for domain in csvFile:
             domains = validate_domain(domain)
-            domain_lookup(domains)
+            print(domain_lookup(domains))
 
 
 def main():
-    csv_file = start_parse()
-    if csv_file is not None:
-        read_csv(csv_file)
-    else:
-        answer = get_input()
-        domains = validate_domain(answer)
-        domain_lookup(domains)
+    print(domain_lookup(["yahoo.com"]))
+    # csv_file = start_parse()
+    # if csv_file is not None:
+    #     read_csv(csv_file)
+    # else:
+    #     answer = get_input()
+    #     domains = validate_domain(answer)
+    #     print(domain_lookup(domains))
 
 
 if __name__ == "__main__":
