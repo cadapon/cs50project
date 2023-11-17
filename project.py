@@ -1,6 +1,8 @@
 import whoisjson
 import re
 import argparse
+import csv
+import sys
 
 
 def start_parse():
@@ -8,31 +10,32 @@ def start_parse():
         description="Check if domain is available for purchase"
     )
     parser.add_argument(
-        "-f", "--file", type=str, required=False, help="Path to csv file"
+        "-f",
+        "--file",
+        required=False,
+        help="Path to csv file",
     )
     args = parser.parse_args()
+    csv_file = args.file
+    if csv_file is not None and not csv_file.lower().endswith(("csv")):
+        sys.stderr.write("Must be a .csv file")
+        sys.exit(1)
+    else:
+        return csv_file
 
 
 def get_input():
-    # Get user input on domains to search
     domains = input("Enter the domains to search, separated by a comma: ").split(", ")
     return domains
 
 
 def validate_domain(domains):
-    # Taken from https://www.geeksforgeeks.org/how-to-validate-a-domain-name-using-regular-expression/
-    # Regex to check valid domain name.
     regex = "^((?!-)[A-Za-z0-9-]" + "{1,63}(?<!-)\\.)" + "+[A-Za-z]{2,6}"
-    # Compile the ReGex
     p = re.compile(regex)
     domain_list = []
     for domain in domains:
-        # If the string is empty
-        # return false
         if domain == None:
             print("Domain name cannot by empty!")
-        # Return if the string
-        # matched the ReGex
         if re.search(p, domain):
             domain_list.append(domain)
         else:
@@ -66,11 +69,22 @@ def parse_lookup(response):
         return response
 
 
+def read_csv(file):
+    with open(file, mode="r", encoding="utf-8-sig") as f:
+        csvFile = csv.reader(f)
+        for domain in csvFile:
+            domains = validate_domain(domain)
+            domain_lookup(domains)
+
+
 def main():
-    start_parse()
-    answer = get_input()
-    domains = validate_domain(answer)
-    domain_lookup(domains)
+    csv_file = start_parse()
+    if csv_file is not None:
+        read_csv(csv_file)
+    else:
+        answer = get_input()
+        domains = validate_domain(answer)
+        domain_lookup(domains)
 
 
 if __name__ == "__main__":
