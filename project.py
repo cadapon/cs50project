@@ -5,7 +5,7 @@ import csv
 import sys
 
 
-def start_parse():
+def start_parse(arg):
     parser = argparse.ArgumentParser(
         description="Check if domain is available for purchase"
     )
@@ -17,11 +17,11 @@ def start_parse():
     )
     args = parser.parse_args()
     csv_file = args.file
-    if csv_file is not None and not csv_file.lower().endswith(("csv")):
-        sys.stderr.write("Must be a .csv file")
-        sys.exit(1)
-    else:
-        return csv_file
+    # if csv_file is not None and not csv_file.lower().endswith(("csv")):
+    #     sys.stderr.write("Must be a .csv file")
+    #     sys.exit(1)
+    # else:
+    return csv_file
 
 
 def get_input():
@@ -71,14 +71,17 @@ def read_csv(file):
 
 
 def main():
-    print(domain_lookup(["yahoo.com"]))
-    # csv_file = start_parse()
-    # if csv_file is not None:
-    #     read_csv(csv_file)
-    # else:
-    #     answer = get_input()
-    #     domains = validate_domain(answer)
-    #     print(domain_lookup(domains))
+    csv_file = start_parse(sys.argv[1:])
+    try:
+        if csv_file is not None and csv_file.lower().endswith(("csv")):
+            read_csv(csv_file)
+        else:
+            answer = get_input()
+            domains = validate_domain(answer)
+            print(domain_lookup(domains))
+    except FileNotFoundError:
+        print(f"File {csv_file} not found!", file=sys.stderr)
+        # sys.exit(1)
 
 
 if __name__ == "__main__":

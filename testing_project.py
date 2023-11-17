@@ -4,16 +4,25 @@ import sys
 
 
 def test_start_parse():
+    # Test unsupported cmdline option
     with pytest.raises(SystemExit) as e_info:
-        project.start_parse()
-        assert e_info.value.code == 1
+        project.start_parse("-m")
+        captured = capsys.readouterr()
+        assert "unrecognized arguments: -m"
+    with pytest.raises(SystemExit) as e_info:
+        # Test both supported and unsuported cmdline options
+        project.start_parse(["-m", "-f"])
+        captured = capsys.readouterr()
+        assert "unrecognized arguments: -m"
 
 
 def test_validate_domain():
     assert project.validate_domain(["stuff.com"]) == ["stuff.com"]
+    # Test for spaces in domain name
     with pytest.raises(SystemExit) as e_info:
         project.validate_domain(["space for stuff.com"])
         assert e_info.value.code == 1
+    # Test for special characters in domain name
     with pytest.raises(SystemExit) as e_info:
         project.validate_domain(["!specialchar!.com"])
         assert e_info.value.code == 1
