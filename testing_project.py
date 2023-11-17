@@ -3,7 +3,7 @@ import pytest
 import sys
 
 
-def test_start_parse():
+def test_start_parse(capsys):
     # Test unsupported cmdline option
     with pytest.raises(SystemExit) as e_info:
         project.start_parse("-m")
