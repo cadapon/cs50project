@@ -44,7 +44,9 @@ def main():
     # ip2whois = IP2WHOIS()
     # print(ip2whois.lookup(domain))
     whoisjson = WHOISJSON()
-    print(whoisjson.whois(domain))
+    response = whoisjson.whois(domain)
+    print(response["contacts"])
+    # print(whoisjson.whois(domain))
 
 
 if __name__ == "__main__":

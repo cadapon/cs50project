@@ -1,5 +1,6 @@
 import requests
 import config
+import sys
 
 
 class WhoIsJSON:
@@ -23,12 +24,16 @@ class WhoIsJSON:
         except requests.exceptions.HTTPError as errh:
             print("HTTP Error")
             print(errh.args[0])
+            sys.exit(1)
         except requests.exceptions.ReadTimeout as errrt:
             print("Time out")
+            sys.exit(1)
         except requests.exceptions.ConnectionError as conerr:
             print("Connection error")
+            sys.exit(1)
         except requests.exceptions.RequestException as errex:
             print("Exception request")
+            sys.exit(1)
 
 
 def testapi():
