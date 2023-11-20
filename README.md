@@ -1,13 +1,36 @@
-CS50P Final
-Domain Availability Tool
+# CS50P Final - Domain Availability Tool
 
-#### Video Demo: <URL HERE>
+#### Video Demo
 
-#### Description: What will your software do? What features will it have? How will it be executed?
+ <URL HERE>
 
-TODO:
+#### Description
 
-Project Files
+The Domain Availability Tool performs a WHOIS lookup on a given domain(s) and returns whether domain can be registered. Domains can be passed in by either user input or as command-line agrument. The tool leverages the [whoisjson.com](https://whoisjson.com/whois-api) REST API.
+
+#### Usage
+
+1. Install requirements.txt file:
+
+```
+pip install -r reuqirements.txt
+```
+
+2. Execute in interactive mode:
+
+```
+python project.py
+```
+
+Or by providing a csv file at the command-line:
+
+```
+python project.py -f <Path to csv file>
+```
+
+#### Project Files
+
+The following files have been essential to the development of this tool. A brief explanation of the files are as follows:
 
 - project.py: main file
 - apitesting.py: test file for whoisjson API to be added to whoisjson.py
@@ -17,28 +40,10 @@ Project Files
 - requirements.txt: required modules
 - test_func.py: test file that would be later used in pytest file 'testing_project.py'
 
-Design Considerations
+### Design Considerations and Learnings
 
-- What might you consider to be a good outcome for your project? A better outcome? The best outcome?
-  Good outcome: Tool can successfully return whether a domain is available
-  Better outcome: Good outcome with ability to search with Punycode (emoji) domains
-  - ip2whois handles puny code
-    Best outcome:
-  - Better outcome with the ability to return a link for users to register an available domain
-  - Logging for API calls and domain results
+When first designing the tool, the main outcome was to tell the user whether a domain was registered or not. I realized shortly after that I would need to consider the user's experience using the tool. If a user needed multiple domains to be checked, it would be easier for them to "upload" a file for the program to execute.
 
-What new skills will you need to acquire? What topics will you need to research? Any learnings?
--API doc
+If I had more time to work on this program, a better outcome would be to include support for Punycode (emoji) domain names. The ip2whois library is capable of parsing Punycode and other international domain names/characters. An even better outcome would also feature an option to take a user to a domain registrar landing page to complete a purchase of a domain. In addition, the whoisjson API is a free tier service so I would like to include logging API calls in the event that the program reaches the rate limit, as well as general logging.
 
-- rate limiting
-- leveraged features for tld checking and subdomain checking. Documentation did not mention. Had to test to find out
-- requests library
-  - exception handling
-- argparse and pytest
-  - stackoverflow for unit testing
-- function refactoring/iterative decomposition
-  - passing list of domains into functions created required For Loops. Better to pass in one domain into function for better troubleshooting and consistency
-- referred to stackoverlfow for regex in domain tld validation
-- GitHub
-  - .gitignore
-  - Git basics
+The project helped me understand how important planning is during development. Had I spent more time breaking down the main issue, I would have caught more issues upfront, than spend more time refactoring code as I code. One instance was when I initially created functions that took in a list as an argument. When I was testing the APIs, I was passing a single domain into the GET request, as per the API document. I found myself having to perform For Loops in all my subsequent functions. Another hard lesson learned was unit testing for argparse. I spent a few hours reading through stackoverflow and articles and was able to piece together other use-cases with mine to suit my testing needs. While on the subject of stackoverflow research, I found several great regex patterns that I used for input validation. Although their documentation did not explicity state their API offers their own domain validation which can parse subdomains. In hindsight, I probably could have removed the regex pattern and let the API handle that workload, but I wanted to practice the coursework! Lastly, I decided to store my code in my personal Github account. This was to help me become more familiar with Git operations for my day to day workflow. One thing to note about Github, I realized that I was exposing my API token in the code. It was a great opportunity and a practical use-case for me to research how to secure secrets using the .gitignore file!
